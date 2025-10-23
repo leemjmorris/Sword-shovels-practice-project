@@ -60,14 +60,12 @@ namespace PathFinding
                 {
                     GameObject gridObj = new GameObject("GridManager");
                     gridManager = gridObj.AddComponent<GridManager>();
-                    Debug.Log("GridManager created automatically");
                 }
             }
 
             //LMJ: Initialize Floodfill pathfinder
             floodfillPathfinder = new FloodfillPathfinder(gridManager, floodfillDistanceThreshold);
 
-            Debug.Log($"PathFindManager initialized: Mode={defaultMode}, Hybrid refinement={refineNavMeshSegments}");
         }
 
         //LMJ: Find path using NavMesh only
@@ -75,7 +73,6 @@ namespace PathFinding
         {
             if (navMeshPath == null)
             {
-                Debug.LogError("NavMeshPath is not initialized!");
                 return null;
             }
 
@@ -96,7 +93,6 @@ namespace PathFinding
                 }
             }
 
-            Debug.LogWarning($"Failed to find NavMesh path from {startPos} to {targetPos}");
             return null;
         }
 
@@ -105,7 +101,6 @@ namespace PathFinding
         {
             if (floodfillPathfinder == null)
             {
-                Debug.LogError("FloodfillPathfinder is not initialized!");
                 return null;
             }
 
@@ -127,7 +122,6 @@ namespace PathFinding
 
             if (navMeshPath == null || navMeshPath.Count == 0)
             {
-                Debug.LogWarning("Hybrid: NavMesh failed, falling back to Floodfill");
                 return FindPathFloodfill(startPos, targetPos);
             }
 
@@ -183,7 +177,6 @@ namespace PathFinding
                 DrawDebugPath(hybridPath, hybridPathColor);
             }
 
-            Debug.Log($"Hybrid path: {navMeshPath.Count} NavMesh waypoints → {hybridPath.Count} hybrid waypoints");
             return hybridPath;
         }
 
@@ -207,7 +200,6 @@ namespace PathFinding
                     break;
 
                 default:
-                    Debug.LogError($"Unknown pathfinding mode: {mode}");
                     lastCalculatedPath = null;
                     break;
             }
@@ -233,7 +225,6 @@ namespace PathFinding
             }
             else
             {
-                Debug.LogWarning($"Failed to find path from {pathfindable.Position} to {targetPosition}");
             }
         }
 
@@ -241,7 +232,6 @@ namespace PathFinding
         public void SetDefaultMode(PathfindingMode mode)
         {
             defaultMode = mode;
-            Debug.Log($"Default pathfinding mode set to: {mode}");
         }
 
         //LMJ: Toggle grid visualization

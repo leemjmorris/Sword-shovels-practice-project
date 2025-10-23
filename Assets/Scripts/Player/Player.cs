@@ -59,7 +59,6 @@ public class Player : CharacterStats
     protected override void Die(GameObject go)
     {
         base.Die(go);
-        Debug.Log("Player has died.");
     }
 
     private void OnTriggerStay(Collider other)

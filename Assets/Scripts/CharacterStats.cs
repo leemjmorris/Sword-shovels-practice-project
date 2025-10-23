@@ -33,7 +33,6 @@ public class CharacterStats : MonoBehaviour
         float finalDamage = Mathf.Max(damage - defense, 1);
 
         currentHealth -= finalDamage;
-        Debug.Log($"{statsData.name} took {finalDamage} damage. Current Health: {currentHealth}/{maxHealth}");
         if (currentHealth <= 0)
         {
             currentHealth = 0;

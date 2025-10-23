@@ -23,13 +23,11 @@ namespace PathFinding
 
             if (startNode == null || targetNode == null)
             {
-                Debug.LogWarning($"Floodfill: Invalid start or target position. Start={startPos}, Target={targetPos}");
                 return null;
             }
 
             if (!startNode.IsTraversable() || !targetNode.IsTraversable())
             {
-                Debug.LogWarning($"Floodfill: Start or target node is not traversable.");
                 return null;
             }
 
@@ -37,7 +35,6 @@ namespace PathFinding
             float distance = Vector3.Distance(startPos, targetPos);
             if (distance > maxSearchDistance)
             {
-                Debug.LogWarning($"Floodfill: Target distance {distance:F2}m exceeds max search distance {maxSearchDistance}m");
                 return null;
             }
 
@@ -49,11 +46,9 @@ namespace PathFinding
 
             if (path != null && path.Count > 0)
             {
-                Debug.Log($"Floodfill: Found path with {path.Count} waypoints");
                 return path;
             }
 
-            Debug.LogWarning("Floodfill: Failed to find path");
             return null;
         }
 

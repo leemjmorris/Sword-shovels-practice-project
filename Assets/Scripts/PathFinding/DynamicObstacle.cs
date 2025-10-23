@@ -18,7 +18,6 @@ namespace PathFinding
 
             if (gridManager == null)
             {
-                Debug.LogWarning($"DynamicObstacle on {gameObject.name}: GridManager not found in scene!");
                 return;
             }
 
@@ -57,7 +56,6 @@ namespace PathFinding
         {
             if (gridManager == null)
             {
-                Debug.LogWarning($"Cannot register obstacle: GridManager is null");
                 return;
             }
 
@@ -73,7 +71,6 @@ namespace PathFinding
         {
             if (gridManager == null)
             {
-                Debug.LogWarning($"Cannot unregister obstacle: GridManager is null");
                 return;
             }
 
@@ -115,7 +112,6 @@ namespace PathFinding
                     if (distance < 20f) //LMJ: Recalculation radius
                     {
                         //LMJ: Entity should recalculate path (implementation depends on entity)
-                        Debug.Log($"Obstacle changed: Entity at {pathfindable.Position} may need path recalculation");
                     }
                 }
             }

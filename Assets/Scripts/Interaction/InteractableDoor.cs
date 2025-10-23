@@ -21,6 +21,9 @@ namespace Interaction
         [SerializeField] private float openDuration = 2f;
         [SerializeField] private AnimationCurve openCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
+        [Header("Initial State")]
+        [SerializeField] private bool startClosed = true;
+
         private bool isOpened = false;
         private bool isOpening = false;
 
@@ -31,6 +34,7 @@ namespace Interaction
         private void Awake()
         {
             //LMJ: Store initial positions (use world position for prefab objects)
+            //LMJ: These are the OPEN positions (how doors are positioned in editor for NavMesh baking)
             if (leftDoor != null)
                 leftDoorStartPos = leftDoor.transform.position;
             if (rightDoor != null)
@@ -44,6 +48,26 @@ namespace Interaction
             {
                 collider.isTrigger = true;
             }
+        }
+
+        private void Start()
+        {
+            //LMJ: Close doors at game start if needed (for NavMesh baking)
+            if (startClosed)
+            {
+                CloseDoorImmediate();
+            }
+        }
+
+        private void CloseDoorImmediate()
+        {
+            //LMJ: Move doors to closed position instantly (reverse of movement)
+            if (leftDoor != null)
+                leftDoor.transform.position = leftDoorStartPos - leftDoorMovement;
+            if (rightDoor != null)
+                rightDoor.transform.position = rightDoorStartPos - rightDoorMovement;
+            if (topDoor != null)
+                topDoor.transform.position = topDoorStartPos - topDoorMovement;
         }
 
         public void Interact()
