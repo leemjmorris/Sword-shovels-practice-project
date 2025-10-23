@@ -45,7 +45,6 @@ namespace PathFinding
         {
             if (path == null || path.Count == 0)
             {
-                Debug.LogWarning($"{gameObject.name}: Received empty path!");
                 return;
             }
 
@@ -53,7 +52,6 @@ namespace PathFinding
             currentWaypointIndex = 0;
             isFollowingPath = true;
 
-            Debug.Log($"{gameObject.name}: Path set with {path.Count} waypoints");
         }
 
         public virtual void FollowPath()
@@ -117,7 +115,6 @@ namespace PathFinding
             isFollowingPath = false;
             currentPath = null;
             currentWaypointIndex = 0;
-            Debug.Log($"{gameObject.name}: Reached destination!");
         }
 
         //LMJ: Request path to target position from PathFindManager
@@ -129,7 +126,6 @@ namespace PathFinding
             }
             else
             {
-                Debug.LogError("PathFindManager not found in scene!");
             }
         }
 
@@ -174,7 +170,6 @@ namespace PathFinding
                 if (distanceToInteraction < stoppingDistance * 2f) // Stop a bit earlier for interaction
                 {
                     StopMoving();
-                    Debug.Log($"{gameObject.name}: Stopped at interaction object");
                     return true;
                 }
             }

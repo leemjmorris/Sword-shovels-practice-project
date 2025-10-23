@@ -36,7 +36,6 @@ public class Enemy : CharacterStats
     protected override void Die(GameObject go)
     {
         base.Die(go);
-        Debug.Log("Monster has died.");
     }
 
     private void OnTriggerStay(Collider other)
@@ -44,7 +43,6 @@ public class Enemy : CharacterStats
         if (other.CompareTag("Player") && Time.time >= lastAttackTime + attackCooldown)
         {
             Attack(other.gameObject);
-            Debug.Log("Enemy Attack!");
             lastAttackTime = Time.time;
         }
     }

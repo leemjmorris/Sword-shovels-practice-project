@@ -54,7 +54,6 @@ namespace Interaction
         {
             if (landingPoint == null)
             {
-                Debug.LogError($"{gameObject.name}: Landing Point is not set!");
                 return;
             }
 
@@ -65,7 +64,6 @@ namespace Interaction
                 //LMJ: Start jump sequence (animation first, then movement)
                 StartCoroutine(JumpSequenceCoroutine(player));
 
-                Debug.Log($"{gameObject.name}: Player jumping to {landingPoint.position}!");
             }
         }
 
@@ -124,6 +122,19 @@ namespace Interaction
             if (navAgent != null)
             {
                 navAgent.enabled = true;
+
+                //LMJ: Warp NavMeshAgent to the new position
+                if (navAgent.isOnNavMesh)
+                {
+                    navAgent.Warp(endPos);
+                }
+            }
+
+            //LMJ: Resume player movement/animation
+            PlayerMovement playerMovement = playerTransform.GetComponent<PlayerMovement>();
+            if (playerMovement != null)
+            {
+                playerMovement.ResumePath();
             }
 
             //LMJ: Cooldown before allowing next jump

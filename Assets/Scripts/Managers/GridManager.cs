@@ -51,7 +51,6 @@ namespace PathFinding
             }
 
             CreateGrid();
-            Debug.Log($"GridManager initialized: {gridSize.x}x{gridSize.y} grid with {cellSize}m cells");
         }
 
         //LMJ: Auto-detect grid bounds from NavMesh
@@ -61,7 +60,6 @@ namespace PathFinding
 
             if (triangulation.vertices.Length == 0)
             {
-                Debug.LogWarning("No NavMesh found! Using manual settings.");
                 gridOrigin = manualGridOrigin;
                 gridSize = manualGridSize;
                 return;
@@ -88,7 +86,6 @@ namespace PathFinding
             int sizeZ = Mathf.CeilToInt((max.z - min.z) / cellSize);
             gridSize = new Vector2Int(sizeX, sizeZ);
 
-            Debug.Log($"Auto-detected NavMesh bounds: Origin={gridOrigin}, Size={gridSize}");
         }
 
         //LMJ: Create grid and check walkability using NavMesh
@@ -267,7 +264,6 @@ namespace PathFinding
             {
                 node.HasDynamicObstacle = true;
                 dynamicObstacles[node.GridPosition] = node;
-                Debug.Log($"Dynamic obstacle registered at {node.GridPosition}");
             }
         }
 
@@ -279,7 +275,6 @@ namespace PathFinding
             {
                 node.HasDynamicObstacle = false;
                 dynamicObstacles.Remove(node.GridPosition);
-                Debug.Log($"Dynamic obstacle unregistered at {node.GridPosition}");
             }
         }
 

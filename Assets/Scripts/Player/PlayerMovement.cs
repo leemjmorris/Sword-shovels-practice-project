@@ -135,6 +135,15 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
     public void Stomp()
     {
         //LMJ: Add stomp effects here (sound, particle effects, camera shake, etc.)
-        Debug.Log("Player stomp!");
+    }
+
+    //LMJ: Resume path after jump or interaction
+    public void ResumePath()
+    {
+        if (currentPath != null && currentPath.Count > 0 && navMeshAgent.enabled)
+        {
+            //LMJ: Re-set destination to resume movement
+            navMeshAgent.SetDestination(currentPath[currentPath.Count - 1]);
+        }
     }
 }

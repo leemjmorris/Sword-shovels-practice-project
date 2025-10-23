@@ -51,21 +51,18 @@ namespace PathFinding
                 {
                     gridManager.ToggleGridVisualization(showGridAtRuntime);
                 }
-                Debug.Log($"Grid visualization: {(showGridAtRuntime ? "ON" : "OFF")}");
             }
 
             // Toggle path visualization with P key
             if (Input.GetKeyDown(KeyCode.P))
             {
                 showPathsAtRuntime = !showPathsAtRuntime;
-                Debug.Log($"Path visualization: {(showPathsAtRuntime ? "ON" : "OFF")}");
             }
 
             // Toggle info display with I key
             if (Input.GetKeyDown(KeyCode.I))
             {
                 showPathfindingInfo = !showPathfindingInfo;
-                Debug.Log($"Info display: {(showPathfindingInfo ? "ON" : "OFF")}");
             }
 
             // Cycle through pathfinding modes with M key
@@ -74,7 +71,6 @@ namespace PathFinding
                 PathfindingMode currentMode = pathFindManager.GetLastUsedMode();
                 PathfindingMode newMode = GetNextMode(currentMode);
                 pathFindManager.SetDefaultMode(newMode);
-                Debug.Log($"Pathfinding mode changed: {currentMode} → {newMode}");
             }
         }
 

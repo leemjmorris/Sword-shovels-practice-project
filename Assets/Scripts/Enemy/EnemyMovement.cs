@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+//LMJ: DEPRECATED - This functionality is now handled by BatGoblinAI
+//LMJ: BatGoblinAI uses PathFinding system instead of simple NavMesh
+//LMJ: Keep this for reference or legacy enemies that don't need smart pathfinding
 public class EnemyMovement : MonoBehaviour
 {
     [Header("Components")]

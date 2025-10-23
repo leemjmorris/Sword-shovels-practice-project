@@ -42,7 +42,6 @@ namespace Managers
             currentInteractable = interactable;
             isInInteractionZone = true;
 
-            Debug.Log($"Entered interaction zone. Press {interactionKey} to interact.");
         }
 
         //LMJ: Unregister an interactable object when player exits its trigger zone
@@ -53,7 +52,6 @@ namespace Managers
                 currentInteractable = null;
                 isInInteractionZone = false;
 
-                Debug.Log("Exited interaction zone.");
             }
         }
 
