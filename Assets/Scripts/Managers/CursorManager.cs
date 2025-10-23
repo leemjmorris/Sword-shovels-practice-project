@@ -43,6 +43,7 @@ public static class CursorManager
                 break;
             case CursorState.Target:
                 // Set cursor icon for Target
+     
                 break;
             default:
                 break;
