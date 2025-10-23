@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(code --list-extensions:*)",
+      "Bash(move:*)",
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Read(//c/Users/LMJ/AppData/Roaming/Code/User/snippets/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
