@@ -389,10 +389,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &256800710 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1719933814232564, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -413,10 +416,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &308796659 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1029801147738244, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -437,10 +443,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &317462825 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1867310192021598, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -461,10 +470,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &325536539 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1073922469846986, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -485,10 +497,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &371111782 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1103099674529148, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -509,10 +524,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &378751940
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,10 +679,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &483238917 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1570529535884860, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -685,10 +706,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &546018392
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,67 +804,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
---- !u!1001 &557763209
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1683857946}
-    m_Modifications:
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.132
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.334
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.66344386
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.40648803
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.49362344
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.38851723
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -8.963
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -79.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 68.149
-      objectReference: {fileID: 0}
-    - target: {fileID: 4813791370842366373, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-      propertyPath: m_Name
-      value: Sword_pfb
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &629954962
 GameObject:
   m_ObjectHideFlags: 0
@@ -925,10 +895,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1001 &734826185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1007,10 +980,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &775975864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,10 +1191,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &1073094058 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1556122310818350, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -1244,10 +1223,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &1125091393 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1139078340957766, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -1268,10 +1250,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1001 &1139796782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6363,7 +6348,7 @@ PrefabInstance:
       addedObject: {fileID: 317462828}
     - targetCorrespondingSourceObject: {fileID: 1500817837376460, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1954324370}
+      addedObject: {fileID: 1895543059}
     - targetCorrespondingSourceObject: {fileID: 1029801147738244, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 308796662}
@@ -6620,7 +6605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 246cc59c7a84ea44f87f6b70acfe30c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1353378427}
+  target: {fileID: 0}
 --- !u!1 &1184490227
 GameObject:
   m_ObjectHideFlags: 0
@@ -6696,10 +6681,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &1264013714 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1385028656978308, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -6720,10 +6708,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!4 &1285380242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4179719205541420, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -6760,36 +6751,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1353378427 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1644408783840310, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-  m_PrefabInstance: {fileID: 2097070135}
-  m_PrefabAsset: {fileID: 0}
---- !u!143 &1353378431
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353378427}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1358574787
 GameObject:
   m_ObjectHideFlags: 0
@@ -6841,10 +6802,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &1437442453
 GameObject:
   m_ObjectHideFlags: 0
@@ -6897,10 +6861,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &1517372459 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1370594208303922, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -6921,15 +6888,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
---- !u!4 &1515215908 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1008785546, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-  m_PrefabInstance: {fileID: 2097070135}
-  m_PrefabAsset: {fileID: 0}
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!4 &1579294953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4951823885998528, guid: a8d3fcab2b67056498a80532b2542465, type: 3}
@@ -6955,10 +6920,13 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1 &1626161060
 GameObject:
   m_ObjectHideFlags: 0
@@ -7068,11 +7036,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1683857946 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4278916805115688, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-  m_PrefabInstance: {fileID: 2097070135}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1710559276 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1492413859341404, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
@@ -7122,273 +7085,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1954324367 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1500817837376460, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
-  m_PrefabInstance: {fileID: 1139796782}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1954324370
---- !u!95 &1895543056 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 95948711514966916, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
-  m_PrefabInstance: {fileID: 939931711}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &1895543058
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895543055}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.56
-  m_Height: 1.91
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.66, z: 0}
---- !u!114 &1895543059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1954324367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28bde2be85c6c3b45930bcdc318f25b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
-  spawnCount: 3
-  spawnRadius: 5
-  activationRange: 5
-  activateOnce: 1
-  spawnPoints: []
-  useRandomPositions: 1
-  animator: {fileID: 1895543056}
-  statsData: {fileID: 11400000, guid: aa5c496889d1ae346baba5c692ea27a6, type: 2}
---- !u!114 &1895543060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895543055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c67821c1169eca94e8ad62745637e428, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTransform: {fileID: 2091474400}
-  navMeshAgent: {fileID: 1895543061}
-  animator: {fileID: 1895543056}
-  moveSpeed: 1.5
-  detectionRange: 10
-  stopDistance: 1
-  returnThreshold: 0.5
---- !u!195 &1895543061
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895543055}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
---- !u!54 &1895543062
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895543055}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 84
-  m_CollisionDetection: 0
---- !u!1 &1908817956 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4813791370842366373, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-  m_PrefabInstance: {fileID: 557763209}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1908817957 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4813791370842366372, guid: ecfd925dbf22db544a1c99bbc8ca2d32, type: 3}
-  m_PrefabInstance: {fileID: 557763209}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2091474399 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 95401923652868456, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-  m_PrefabInstance: {fileID: 2097070135}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2091474400 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4621171860792138, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-  m_PrefabInstance: {fileID: 2097070135}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2091474401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353378427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec5f103bac39806458ad3ab912f52a24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 2091474400}
-  cameraTransform: {fileID: 1153568535}
-  smoothSpeed: 0.125
-  offset: {x: 9.12, y: 9.2, z: -3.2}
---- !u!114 &2091474402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353378427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8810eed1e348cd24f8e2b60f09e8b565, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerRigidbody: {fileID: 2091474404}
-  navMeshAgent: {fileID: 2091474403}
-  playerAnimator: {fileID: 2091474399}
-  moveSpeed: 5
-  preferredPathfindingMode: 2
-  requiresDynamicObstacleAvoidance: 1
---- !u!195 &2091474403
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353378427}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
-  m_ObstacleAvoidanceType: 0
---- !u!54 &2091474404
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353378427}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 84
-  m_CollisionDetection: 0
---- !u!114 &2091474405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353378427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f2dc1b80b6f6c3418d36a1eb45c5e41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 2091474399}
-  statsData: {fileID: 11400000, guid: 572f22dbabc6573498a47aebef6df4a1, type: 2}
-  weaponPoint: {fileID: 1515215908}
-  swordPrefab: {fileID: 1908817956}
---- !u!136 &2091474406
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353378427}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.73
-  m_Height: 1.86
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.76, z: 0}
---- !u!1001 &2097070135
+--- !u!1001 &1746429059
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -7422,11 +7119,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4621171860792138, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4621171860792138, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4621171860792138, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7440,35 +7137,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7105633782475078622, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
+      propertyPath: cameraTransform
+      value: 
+      objectReference: {fileID: 1153568535}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4278916805115688, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1908817957}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1644408783840310, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1353378431}
-    - targetCorrespondingSourceObject: {fileID: 1644408783840310, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2091474404}
-    - targetCorrespondingSourceObject: {fileID: 1644408783840310, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2091474403}
-    - targetCorrespondingSourceObject: {fileID: 1644408783840310, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2091474402}
-    - targetCorrespondingSourceObject: {fileID: 1644408783840310, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2091474401}
-    - targetCorrespondingSourceObject: {fileID: 1644408783840310, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2091474405}
-    - targetCorrespondingSourceObject: {fileID: 1644408783840310, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2091474406}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
+--- !u!114 &1895543059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954324367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28bde2be85c6c3b45930bcdc318f25b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
+  spawnCount: 3
+  spawnRadius: 5
+  maxSpawnAttempts: 10
+  activationRange: 5
+  activateOnce: 1
+  spawnPoints: []
+  useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
+--- !u!1 &1954324367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1500817837376460, guid: 5bd2b2494c0eed644a664c81e91b3a5f, type: 3}
+  m_PrefabInstance: {fileID: 1139796782}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2130752154
 GameObject:
   m_ObjectHideFlags: 0
@@ -7534,17 +7238,19 @@ MonoBehaviour:
   monsterPrefab: {fileID: 9214512462467621134, guid: 9945481a3d648fb44a3fa23980f791f7, type: 3}
   spawnCount: 3
   spawnRadius: 5
+  maxSpawnAttempts: 10
   activationRange: 5
   activateOnce: 1
   spawnPoints: []
   useRandomPositions: 1
+  validateSpawnPosition: 1
+  groundCheckHeight: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1153568535}
   - {fileID: 1139796782}
-  - {fileID: 2097070135}
   - {fileID: 1626161061}
   - {fileID: 1437442454}
   - {fileID: 629954964}
@@ -7559,3 +7265,4 @@ SceneRoots:
   - {fileID: 102525328}
   - {fileID: 1358574788}
   - {fileID: 861406417}
+  - {fileID: 1746429059}

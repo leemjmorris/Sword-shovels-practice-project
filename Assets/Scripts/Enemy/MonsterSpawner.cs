@@ -165,7 +165,7 @@ public class MonsterSpawner : MonoBehaviour
         //LMJ: Check if position is on a walkable node in the grid
         GridNode node = gridManager.GetNodeFromWorldPosition(worldPosition);
 
-        return node != null && node.isWalkable;
+        return node != null && node.IsWalkable;
     }
 
     private void ActivateMonsters()
