@@ -6,24 +6,24 @@ public class InventorySetupMenu
     [MenuItem("Tools/Inventory/Setup Player Inventory")]
     public static void SetupPlayerInventory()
     {
-        // ¾À¿¡¼­ "Hero" ¶Ç´Â ¼±ÅÃµÈ ¿ÀºêÁ§Æ®¸¦ Ã£À½
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ "Hero" ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½
         GameObject player = GameObject.Find("Hero");
         if (player == null && Selection.activeGameObject != null)
             player = Selection.activeGameObject;
 
         if (player == null)
         {
-            EditorUtility.DisplayDialog("Error", "Hero ¿ÀºêÁ§Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ¾À¿¡ 'Hero' ¿ÀºêÁ§Æ®¸¦ ¸¸µé°Å³ª Hierarchy¿¡¼­ ¿ÀºêÁ§Æ®¸¦ ¼±ÅÃÇÏ¼¼¿ä.", "OK");
+            EditorUtility.DisplayDialog("Error", "Hero ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ 'Hero' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å³ï¿½ Hierarchyï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.", "OK");
             return;
         }
 
-        // Inventory ÄÄÆ÷³ÍÆ® Ãß°¡
+        // Inventory ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
         if (player.GetComponent<Inventory>() == null)
         {
             Undo.AddComponent<Inventory>(player);
         }
 
-        // EquipmentManager ½Ì±ÛÅæ ¿ÀºêÁ§Æ® »ý¼º
+        // EquipmentManager ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         EquipmentManager manager = Object.FindObjectOfType<EquipmentManager>();
         if (manager == null)
         {

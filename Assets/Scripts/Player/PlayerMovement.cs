@@ -59,9 +59,12 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
         FollowPath();
 
         //LMJ: Update animator
-        Vector3 horizontalVelocity = new Vector3(navMeshAgent.velocity.x, 0, navMeshAgent.velocity.z);
-        float currentSpeed = horizontalVelocity.magnitude;
-        playerAnimator.SetFloat("Speed", currentSpeed);
+        if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+        {
+            Vector3 horizontalVelocity = new Vector3(navMeshAgent.velocity.x, 0, navMeshAgent.velocity.z);
+            float currentSpeed = horizontalVelocity.magnitude;
+            playerAnimator.SetFloat("Speed", currentSpeed);
+        }
     }
 
     //LMJ: IPathfindable interface methods
@@ -72,7 +75,10 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
         if (currentPath != null && currentPath.Count > 0)
         {
             //LMJ: Set NavMeshAgent destination to the final point
-            navMeshAgent.SetDestination(currentPath[currentPath.Count - 1]);
+            if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+            {
+                navMeshAgent.SetDestination(currentPath[currentPath.Count - 1]);
+            }
         }
     }
 
@@ -91,6 +97,10 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
     public bool HasReachedDestination()
     {
         if (currentPath == null || currentPath.Count == 0)
+            return true;
+
+        //LMJ: Check if NavMeshAgent is valid
+        if (navMeshAgent == null || !navMeshAgent.enabled || !navMeshAgent.isOnNavMesh)
             return true;
 
         //LMJ: Check if NavMeshAgent reached its destination
@@ -140,7 +150,7 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
     //LMJ: Resume path after jump or interaction
     public void ResumePath()
     {
-        if (currentPath != null && currentPath.Count > 0 && navMeshAgent.enabled)
+        if (currentPath != null && currentPath.Count > 0 && navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
         {
             //LMJ: Re-set destination to resume movement
             navMeshAgent.SetDestination(currentPath[currentPath.Count - 1]);
