@@ -22,12 +22,12 @@ public class LongDistanceMonster : CharacterStats
     private float lastAttackTime = 0f;
     private bool isAttacking = false;
     private CancellationTokenSource cancellationTokenSource;
-
+    private Vector3 initialPosition;
     private void Start()
     {
         InitStats();
         cancellationTokenSource = new CancellationTokenSource();
-        
+
         if (playerTransform == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -36,6 +36,7 @@ public class LongDistanceMonster : CharacterStats
                 playerTransform = player.transform;
             }
         }
+        initialPosition = transform.position;
     }
 
     private void OnDestroy()
@@ -50,12 +51,31 @@ public class LongDistanceMonster : CharacterStats
 
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
-        if (distanceToPlayer <= detectionRange && 
-            distanceToPlayer <= attackRange && 
-            Time.time >= lastAttackTime + attackCooldown && 
-            !isAttacking)
+        if (distanceToPlayer <= detectionRange)
         {
-            PerformRangedAttack(cancellationTokenSource.Token).Forget();
+
+            if (distanceToPlayer > attackRange)
+            {
+                navMeshAgent.SetDestination(playerTransform.position);
+            }
+
+            else if (Time.time >= lastAttackTime + attackCooldown && !isAttacking)
+            {
+                navMeshAgent.ResetPath();
+                PerformRangedAttack(cancellationTokenSource.Token).Forget();
+            }
+        }
+        else
+        {
+            float distanceToInitial = Vector3.Distance(transform.position, initialPosition);
+            if (distanceToInitial > 0.5f) 
+            {
+                navMeshAgent.SetDestination(initialPosition);
+            }
+            else
+            {
+                navMeshAgent.ResetPath(); 
+            }
         }
     }
 
@@ -93,9 +113,7 @@ public class LongDistanceMonster : CharacterStats
 
         try
         {
-
             await UniTask.Delay(System.TimeSpan.FromSeconds(attackDelay), cancellationToken: cancellationToken);
-
 
             Vector3 attackPosition = playerTransform.position;
 
@@ -103,9 +121,7 @@ public class LongDistanceMonster : CharacterStats
             {
                 GameObject effect = Instantiate(attackEffectPrefab, attackPosition, Quaternion.identity);
 
-
                 ApplyDamageAtPosition(attackPosition);
-
 
                 if (effect != null)
                 {
