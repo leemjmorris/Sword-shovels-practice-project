@@ -47,4 +47,11 @@ public class Enemy : CharacterStats
             lastAttackTime = Time.time;
         }
     }
+    private void  OnTriggerExit(Collider other) 
+    {
+        if (other.CompareTag("Player"))
+        {
+            animator.SetBool("IsAttack", false);
+        }
+    }
 }

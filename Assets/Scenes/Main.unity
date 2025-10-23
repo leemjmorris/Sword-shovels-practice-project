@@ -536,7 +536,16 @@ PrefabInstance:
       addedObject: {fileID: 1895543058}
     - targetCorrespondingSourceObject: {fileID: 1880194204201268, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1895543061}
+    - targetCorrespondingSourceObject: {fileID: 1880194204201268, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1895543059}
+    - targetCorrespondingSourceObject: {fileID: 1880194204201268, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1895543060}
+    - targetCorrespondingSourceObject: {fileID: 1880194204201268, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1895543062}
   m_SourcePrefab: {fileID: 100100000, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
 --- !u!1001 &1139796782
 PrefabInstance:
@@ -1220,6 +1229,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1880194204201268, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
   m_PrefabInstance: {fileID: 939931711}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1895543056 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95948711514966916, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
+  m_PrefabInstance: {fileID: 939931711}
+  m_PrefabAsset: {fileID: 0}
 --- !u!136 &1895543058
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1255,7 +1269,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d38054b3cb25d46b2e32c56412fa75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1895543056}
   statsData: {fileID: 11400000, guid: aa5c496889d1ae346baba5c692ea27a6, type: 2}
+--- !u!114 &1895543060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895543055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67821c1169eca94e8ad62745637e428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 2091474400}
+  navMeshAgent: {fileID: 1895543061}
+  animator: {fileID: 1895543056}
+  moveSpeed: 3
+  detectionRange: 10
+  stopDistance: 2
+  returnThreshold: 0.5
+--- !u!195 &1895543061
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895543055}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!54 &1895543062
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895543055}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0
 --- !u!95 &2091474399 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 95401923652868456, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
@@ -1345,7 +1428,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &2091474405
 MonoBehaviour:
@@ -1359,6 +1442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2dc1b80b6f6c3418d36a1eb45c5e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2091474399}
   statsData: {fileID: 11400000, guid: 572f22dbabc6573498a47aebef6df4a1, type: 2}
 --- !u!136 &2091474406
 CapsuleCollider:

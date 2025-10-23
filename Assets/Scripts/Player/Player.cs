@@ -39,7 +39,7 @@ public class Player : CharacterStats
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
             if (Input.GetMouseButtonDown(0) && Time.time >= lastAttackTime + attackCooldown)
             {
@@ -47,6 +47,13 @@ public class Player : CharacterStats
                 lastAttackTime = Time.time;
                 Debug.Log("Player Attack!");
             }
+        }
+    }
+    private void  OnTriggerExit(Collider other) 
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            animator.SetBool("IsAttack", true);
         }
     }
 }
