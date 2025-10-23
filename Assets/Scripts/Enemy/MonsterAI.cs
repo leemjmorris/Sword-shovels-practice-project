@@ -164,7 +164,7 @@ public class MonsterAI : PathfindableEntity
             //LMJ: Just set animation here
             if (animator != null)
             {
-                animator.SetBool("IsAttack", true);
+                animator.SetTrigger("IsAttack");
             }
         }
     }
@@ -189,7 +189,7 @@ public class MonsterAI : PathfindableEntity
         //LMJ: Reset attack animation when not in range
         if (!isInAttackRange && animator.GetBool("IsAttack"))
         {
-            animator.SetBool("IsAttack", false);
+            // animator.SetTrigger("ResetAttack");
         }
     }
 

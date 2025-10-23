@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CursorManager : MonoBehaviour
 {
-    [SerializeField] private Texture2D defaultCursor;
+    [SerializeField] private Texture2D targetCursor;
     [SerializeField] private Texture2D doorCursor;
     [SerializeField] private Texture2D pointerCursor;
     [SerializeField] private Texture2D attackCursor;
@@ -21,26 +21,25 @@ public class CursorManager : MonoBehaviour
         {
             int layer = hit.collider.gameObject.layer;
             string layerName = LayerMask.LayerToName(layer);
-        
+
             switch (layerName)
             {
                 case "Ground":
-                    Debug.Log("Ground Layer Hit");
+                    Cursor.SetCursor(targetCursor, Vector2.zero, CursorMode.Auto);
                     break;
                 case "Door":
-                    Debug.Log("Door Layer Hit");
+                    Cursor.SetCursor(doorCursor, Vector2.zero, CursorMode.Auto);
                     break;
                 case "Enemy":
-                    Debug.Log("Enemy Layer Hit");
-                    break;
-                case "Pointer":
-                    Debug.Log("Pointer Layer Hit");
+                    Cursor.SetCursor(attackCursor, Vector2.zero, CursorMode.Auto);
                     break;
                 default:
                     break;
             }
-            Debug.Log($"Hit Layer: {layer} ({layerName})");
-            Debug.Log($"Hit Object: {hit.collider.name}");
+        }
+        else
+        {
+            Cursor.SetCursor(pointerCursor, Vector2.zero, CursorMode.Auto);
         }
         
     }

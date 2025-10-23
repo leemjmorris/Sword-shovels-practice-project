@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
 
     [Header("Settings")]
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private LayerMask groundLayerMask;
 
     //LMJ: Pathfinding variables for IPathfindable interface
     [Header("Pathfinding")]
@@ -48,7 +49,17 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
+
+            //JML : Ignore clicks on enemies
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
+            {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    return;
+                }
+            }
+
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, groundLayerMask))
             {
                 //LMJ: Use PathFindManager to request path
                 PathFindManager.Instance.RequestPath(this, hit.point);
@@ -63,6 +74,12 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
         float currentSpeed = horizontalVelocity.magnitude;
         playerAnimator.SetFloat("Speed", currentSpeed);
     }
+
+    public void MoveTo(Vector3 targetPosition)
+    {
+        PathFindManager.Instance.RequestPath(this, targetPosition);
+    }
+
 
     //LMJ: IPathfindable interface methods
     public void SetPath(List<Vector3> path)
@@ -91,6 +108,9 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
     public bool HasReachedDestination()
     {
         if (currentPath == null || currentPath.Count == 0)
+            return true;
+
+        if (navMeshAgent == null || !navMeshAgent.enabled || !navMeshAgent.isOnNavMesh)
             return true;
 
         //LMJ: Check if NavMeshAgent reached its destination

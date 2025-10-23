@@ -4,19 +4,20 @@ using UnityEngine;
 public class Player : CharacterStats
 {
     private float lastAttackTime = 0f;
-    private bool isNearEnemy = false;
     private GameObject currentEnemy = null;
 
-    [SerializeField] private Transform weaponPoint; // 무기 장착 위치
-    [SerializeField] private GameObject swordPrefab; // 검 프리팹
+    [SerializeField] private Transform weaponPoint;
+    [SerializeField] private GameObject swordPrefab; 
     private void Awake()
     {
         InitStats();
     }
+
     private void Start()
     {
         swordPrefab.transform.position = weaponPoint.position;
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -36,6 +37,15 @@ public class Player : CharacterStats
                     Attack(hit.collider.gameObject);
                     lastAttackTime = Time.time;
                     Debug.Log("Player Attack!");
+                }
+                else
+                {
+                    //JML : Move player to clicked point
+                    PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+                    if (playerMovement != null)
+                    {
+                        playerMovement.MoveTo(hit.point);
+                    }
                 }
             }
         }
@@ -64,8 +74,7 @@ public class Player : CharacterStats
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Enemy"))
-        {
-            isNearEnemy = true;        
+        {    
             currentEnemy = other.gameObject; 
         }
     }
@@ -73,7 +82,6 @@ public class Player : CharacterStats
     {
         if (other.CompareTag("Enemy"))
         {
-            isNearEnemy = false;
             currentEnemy = null;
         }
     }

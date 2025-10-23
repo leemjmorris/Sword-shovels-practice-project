@@ -17,3 +17,4 @@ MonoBehaviour:
   attackPower: 10
   defense: 5
   moveSpeed: 6
+  attackCooldown: 0.2
