@@ -1,0 +1,10 @@
+{
+  "JML Comment": {
+    "scope": "csharp",
+    "prefix": "jml",
+    "body": [
+      "//JML : $0"
+    ],
+    "description": "JML 이니셜 주석"
+  }
+}
