@@ -44,6 +44,7 @@ public class Enemy : CharacterStats
         if (other.CompareTag("Player") && Time.time >= lastAttackTime + attackCooldown)
         {
             Attack(other.gameObject);
+            Debug.Log("Enemy Attack!");
             lastAttackTime = Time.time;
         }
     }

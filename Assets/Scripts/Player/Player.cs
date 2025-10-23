@@ -53,7 +53,7 @@ public class Player : CharacterStats
     {
         if (other.CompareTag("Enemy"))
         {
-            animator.SetBool("IsAttack", true);
+            animator.SetBool("IsAttack", false);
         }
     }
 }
