@@ -66,5 +66,9 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "Sword-shovels-practice-project.sln"
+    "dotnet.defaultSolution": "Sword-shovels-practice-project.sln",
+    "editor.snippetSuggestions": "top",
+    "editor.quickSuggestions": {
+        "comments": true
+    }
 }

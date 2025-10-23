@@ -1,0 +1,10 @@
+{
+  "CBL Comment": {
+    "scope": "csharp",
+    "prefix": "cbl",
+    "body": [
+      "//CBL : $0"
+    ],
+    "description": "CBL 이니셜 주석"
+  }
+}

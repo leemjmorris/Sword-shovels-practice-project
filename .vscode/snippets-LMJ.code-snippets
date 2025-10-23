@@ -1,0 +1,10 @@
+{
+  "LMJ Comment": {
+    "scope": "csharp",
+    "prefix": "lmj",
+    "body": [
+      "//LMJ: $0"
+    ],
+    "description": "LMJ 이니셜 주석"
+  }
+}
