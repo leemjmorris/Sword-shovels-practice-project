@@ -51,7 +51,7 @@ public class CharacterStats : MonoBehaviour
         if (targetStats != null)
         {
             targetStats.TakeDamage(attackPower, target);
-            animator.SetBool("IsAttack", true);
+            animator.SetTrigger("IsAttack");
             Debug.Log($"{statsData.name} attacked {target.name}!");
         }
     }

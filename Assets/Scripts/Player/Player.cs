@@ -4,15 +4,40 @@ using UnityEngine;
 public class Player : CharacterStats
 {
     private float lastAttackTime = 0f;
+    private bool isNearEnemy = false;
+    private GameObject currentEnemy = null;
+
+    [SerializeField] private Transform weaponPoint; // 무기 장착 위치
+    [SerializeField] private GameObject swordPrefab; // 검 프리팹
     private void Awake()
     {
         InitStats();
+    }
+    private void Start()
+    {
+        swordPrefab.transform.position = weaponPoint.position;
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(100f, gameObject);
+        }
+
+        if (Input.GetMouseButtonDown(0) && Time.time >= lastAttackTime + attackCooldown)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            
+            if (Physics.Raycast(ray, out hit, 100f))
+            {
+                if (hit.collider.CompareTag("Enemy") && hit.collider.gameObject == currentEnemy)
+                {
+                    Attack(hit.collider.gameObject);
+                    lastAttackTime = Time.time;
+                    Debug.Log("Player Attack!");
+                }
+            }
         }
     }
     
@@ -41,19 +66,16 @@ public class Player : CharacterStats
     {
         if (other.CompareTag("Enemy"))
         {
-            if (Input.GetMouseButtonDown(0) && Time.time >= lastAttackTime + attackCooldown)
-            {
-                Attack(other.gameObject);
-                lastAttackTime = Time.time;
-                Debug.Log("Player Attack!");
-            }
+            isNearEnemy = true;        
+            currentEnemy = other.gameObject; 
         }
     }
-    private void  OnTriggerExit(Collider other) 
+    private void OnTriggerExit(Collider other) 
     {
         if (other.CompareTag("Enemy"))
         {
-            animator.SetBool("IsAttack", false);
+            isNearEnemy = false;
+            currentEnemy = null;
         }
     }
 }

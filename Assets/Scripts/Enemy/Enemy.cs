@@ -52,7 +52,7 @@ public class Enemy : CharacterStats
     {
         if (other.CompareTag("Player"))
         {
-            animator.SetBool("IsAttack", false);
+            //animator.SetBool("IsAttack");
         }
     }
 }

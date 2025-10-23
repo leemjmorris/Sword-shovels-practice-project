@@ -11,7 +11,7 @@ public class EnemyMovement : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float detectionRange = 10f;
-    [SerializeField] private float stopDistance = 2f;
+    [SerializeField] private float stopDistance = 0.3f;
     [SerializeField] private float returnThreshold = 0.5f; 
 
     private Vector3 initialPosition; 
