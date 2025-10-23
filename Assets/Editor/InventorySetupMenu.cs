@@ -24,7 +24,7 @@ public class InventorySetupMenu
         }
 
         // EquipmentManager �̱��� ������Ʈ ����
-        EquipmentManager manager = Object.FindObjectOfType<EquipmentManager>();
+        EquipmentManager manager = Object.FindFirstObjectByType<EquipmentManager>();
         if (manager == null)
         {
             GameObject mgrGO = new GameObject("EquipmentManager");

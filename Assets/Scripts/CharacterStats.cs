@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
-{   
+{
     [SerializeField] protected Animator animator;
     public StatData statsData;
     protected float maxHealth;
@@ -9,6 +9,11 @@ public class CharacterStats : MonoBehaviour
     protected float attackPower;
     protected float defense;
     protected float attackCooldown;
+
+    //LMJ: Public accessors for UI
+    public float MaxHealth => maxHealth;
+    public float CurrentHealth => currentHealth;
+    public float HealthPercentage => maxHealth > 0 ? currentHealth / maxHealth : 0f;
 
     /// <summary>
     /// Init Stat

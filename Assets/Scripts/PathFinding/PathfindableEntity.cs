@@ -20,10 +20,16 @@ namespace PathFinding
         [SerializeField] protected PathfindingMode preferredPathfindingMode = PathfindingMode.Hybrid;
         [SerializeField] protected bool requiresDynamicObstacleAvoidance = false;
 
+        [Header("Gravity Settings")]
+        [SerializeField] protected float gravity = 20f;
+        [SerializeField] protected float groundCheckDistance = 0.3f;
+        [SerializeField] protected LayerMask groundLayers = ~0; // All layers by default
+
         protected CharacterController characterController;
         protected List<Vector3> currentPath;
         protected int currentWaypointIndex = 0;
         protected bool isFollowingPath = false;
+        protected Vector3 verticalVelocity = Vector3.zero;
 
         public Vector3 Position => transform.position;
         public float MoveSpeed => moveSpeed;
@@ -35,10 +41,57 @@ namespace PathFinding
 
         protected virtual void Update()
         {
+            //LMJ: Apply gravity continuously
+            ApplyGravity();
+
             if (autoFollowPath && isFollowingPath)
             {
                 FollowPath();
             }
+        }
+
+        //LMJ: Check if entity is grounded using raycast (more reliable than CharacterController.isGrounded)
+        protected virtual bool IsGrounded()
+        {
+            if (characterController == null || !characterController.enabled)
+                return false;
+
+            //LMJ: Cast a ray from the center of the character down
+            Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
+            float rayDistance = groundCheckDistance;
+
+            //LMJ: Use SphereCast for more reliable ground detection
+            bool isGrounded = Physics.SphereCast(rayOrigin, characterController.radius * 0.9f, Vector3.down,
+                                                  out RaycastHit hit, rayDistance, groundLayers, QueryTriggerInteraction.Ignore);
+
+            return isGrounded;
+        }
+
+        //LMJ: Apply gravity to keep character grounded
+        protected virtual void ApplyGravity()
+        {
+            if (characterController == null || !characterController.enabled)
+                return;
+
+            //LMJ: Check if grounded using our custom ground check
+            bool isGrounded = IsGrounded();
+
+            if (isGrounded)
+            {
+                //LMJ: Reset vertical velocity when grounded, but keep small downward force
+                if (verticalVelocity.y < 0)
+                {
+                    verticalVelocity.y = -2f;
+                }
+            }
+            else
+            {
+                //LMJ: Apply gravity acceleration when in air
+                verticalVelocity.y -= gravity * Time.deltaTime;
+            }
+
+            //LMJ: Apply vertical movement
+            characterController.Move(verticalVelocity * Time.deltaTime);
         }
 
         public virtual void SetPath(List<Vector3> path)
@@ -82,10 +135,10 @@ namespace PathFinding
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
 
+            //LMJ: Apply horizontal movement only (gravity is handled separately in ApplyGravity)
             Vector3 movement = direction * moveSpeed * Time.deltaTime;
-            if (characterController.enabled)
+            if (characterController != null && characterController.enabled)
             {
-                movement.y = -9.81f * Time.deltaTime;
                 characterController.Move(movement);
             }
             else

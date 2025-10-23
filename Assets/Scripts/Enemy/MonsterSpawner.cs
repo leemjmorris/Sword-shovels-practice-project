@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using PathFinding;
 
 //LMJ: Monster spawner that pre-spawns monsters and activates them when player is near
@@ -24,6 +25,14 @@ public class MonsterSpawner : MonoBehaviour
     [Header("Ground Validation")]
     [SerializeField] private bool validateSpawnPosition = true;
     [SerializeField] private float groundCheckHeight = 10f;
+    [SerializeField] private float navMeshSampleDistance = 2f;
+
+    [Header("Grid-Based Spawn (Recommended)")]
+    [SerializeField] private bool useGridBasedSpawn = true;
+    [Tooltip("Search for walkable grid nodes within this radius")]
+    [SerializeField] private float gridSearchRadius = 5f;
+    [Tooltip("Maximum number of grid cells to check when searching for spawn position")]
+    [SerializeField] private int maxGridSearchAttempts = 50;
 
     private List<GameObject> spawnedMonsters = new List<GameObject>();
     private Transform player;
@@ -102,6 +111,29 @@ public class MonsterSpawner : MonoBehaviour
             if (spawnPoints[index] != null)
             {
                 Vector3 position = spawnPoints[index].position;
+
+                //LMJ: Validate spawn point using Grid if enabled
+                if (validateSpawnPosition && useGridBasedSpawn && gridManager != null)
+                {
+                    //LMJ: Check if spawn point is on walkable grid
+                    if (IsPositionWalkable(position))
+                    {
+                        GridNode node = gridManager.GetNodeFromWorldPosition(position);
+                        if (node != null && node.IsTraversable())
+                        {
+                            return node.WorldPosition; // Use grid-corrected position
+                        }
+                    }
+
+                    //LMJ: If not walkable, try to find nearby walkable node
+                    Vector3 nearbyWalkable = FindNearestWalkablePosition(position, gridSearchRadius);
+                    if (nearbyWalkable != Vector3.zero)
+                    {
+                        Debug.LogWarning($"MonsterSpawner: Spawn point {index} is not walkable, using nearby position");
+                        return nearbyWalkable;
+                    }
+                }
+
                 return validateSpawnPosition ? GetValidGroundPosition(position) : position;
             }
         }
@@ -118,7 +150,18 @@ public class MonsterSpawner : MonoBehaviour
 
     private Vector3 GetRandomValidPosition()
     {
-        //LMJ: Try multiple times to find a valid spawn position
+        //LMJ: Prefer grid-based spawning if available and enabled
+        if (useGridBasedSpawn && gridManager != null)
+        {
+            Vector3 gridBasedPosition = GetRandomWalkablePositionFromGrid();
+            if (gridBasedPosition != Vector3.zero)
+            {
+                return gridBasedPosition;
+            }
+            Debug.LogWarning($"MonsterSpawner: Grid-based spawn failed, falling back to NavMesh validation");
+        }
+
+        //LMJ: Fallback: Try multiple times to find a valid spawn position using NavMesh
         for (int attempt = 0; attempt < maxSpawnAttempts; attempt++)
         {
             Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
@@ -141,31 +184,157 @@ public class MonsterSpawner : MonoBehaviour
         return GetValidGroundPosition(transform.position);
     }
 
+    //LMJ: Get random walkable position using GridManager (most reliable method)
+    private Vector3 GetRandomWalkablePositionFromGrid()
+    {
+        return GetRandomWalkablePositionFromGrid(transform.position, gridSearchRadius);
+    }
+
+    //LMJ: Get random walkable position near a target position
+    private Vector3 GetRandomWalkablePositionFromGrid(Vector3 centerPosition, float searchRadius)
+    {
+        if (gridManager == null)
+            return Vector3.zero;
+
+        //LMJ: Get grid position of center
+        Vector2Int centerGridPos = gridManager.GetGridPosition(centerPosition);
+
+        //LMJ: Calculate search radius in grid cells
+        int searchRadiusCells = Mathf.CeilToInt(searchRadius / gridManager.CellSize);
+
+        //LMJ: Collect all walkable nodes within radius
+        List<GridNode> walkableNodes = new List<GridNode>();
+
+        for (int xOffset = -searchRadiusCells; xOffset <= searchRadiusCells; xOffset++)
+        {
+            for (int yOffset = -searchRadiusCells; yOffset <= searchRadiusCells; yOffset++)
+            {
+                //LMJ: Check if within circular radius (not square)
+                float distanceInCells = Mathf.Sqrt(xOffset * xOffset + yOffset * yOffset);
+                if (distanceInCells > searchRadiusCells)
+                    continue;
+
+                Vector2Int checkPos = centerGridPos + new Vector2Int(xOffset, yOffset);
+                GridNode node = gridManager.GetNode(checkPos);
+
+                if (node != null && node.IsWalkable && node.IsTraversable())
+                {
+                    walkableNodes.Add(node);
+                }
+
+                //LMJ: Stop if we've checked too many cells (performance limit)
+                if (walkableNodes.Count + (xOffset * yOffset) > maxGridSearchAttempts)
+                    break;
+            }
+        }
+
+        //LMJ: Return random walkable position
+        if (walkableNodes.Count > 0)
+        {
+            GridNode randomNode = walkableNodes[Random.Range(0, walkableNodes.Count)];
+            return randomNode.WorldPosition;
+        }
+
+        //LMJ: No walkable nodes found
+        return Vector3.zero;
+    }
+
+    //LMJ: Find nearest walkable position to a target using Grid (BFS-like spiral search)
+    private Vector3 FindNearestWalkablePosition(Vector3 targetPosition, float maxSearchRadius)
+    {
+        if (gridManager == null)
+            return Vector3.zero;
+
+        //LMJ: Get grid position
+        Vector2Int targetGridPos = gridManager.GetGridPosition(targetPosition);
+
+        //LMJ: Check center position first
+        GridNode centerNode = gridManager.GetNode(targetGridPos);
+        if (centerNode != null && centerNode.IsWalkable && centerNode.IsTraversable())
+        {
+            return centerNode.WorldPosition;
+        }
+
+        //LMJ: Spiral outward to find nearest walkable node
+        int maxRadiusCells = Mathf.CeilToInt(maxSearchRadius / gridManager.CellSize);
+
+        for (int radius = 1; radius <= maxRadiusCells; radius++)
+        {
+            for (int xOffset = -radius; xOffset <= radius; xOffset++)
+            {
+                for (int yOffset = -radius; yOffset <= radius; yOffset++)
+                {
+                    //LMJ: Only check the "ring" at current radius
+                    if (Mathf.Abs(xOffset) != radius && Mathf.Abs(yOffset) != radius)
+                        continue;
+
+                    Vector2Int checkPos = targetGridPos + new Vector2Int(xOffset, yOffset);
+                    GridNode node = gridManager.GetNode(checkPos);
+
+                    if (node != null && node.IsWalkable && node.IsTraversable())
+                    {
+                        return node.WorldPosition;
+                    }
+                }
+            }
+        }
+
+        return Vector3.zero;
+    }
+
     private Vector3 GetValidGroundPosition(Vector3 position)
     {
-        //LMJ: Raycast down to find ground
+        //LMJ: First, try to sample NavMesh directly
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(position, out navHit, navMeshSampleDistance, NavMesh.AllAreas))
+        {
+            //LMJ: Found a valid NavMesh position nearby
+            return navHit.position;
+        }
+
+        //LMJ: Fallback: Raycast down to find ground
         RaycastHit hit;
         Vector3 rayStart = new Vector3(position.x, position.y + groundCheckHeight, position.z);
 
         if (Physics.Raycast(rayStart, Vector3.down, out hit, groundCheckHeight * 2f))
         {
+            //LMJ: Try to sample NavMesh at raycast hit point
+            if (NavMesh.SamplePosition(hit.point, out navHit, navMeshSampleDistance, NavMesh.AllAreas))
+            {
+                return navHit.position;
+            }
+
             return hit.point;
         }
 
-        //LMJ: No ground found, return original position
+        //LMJ: No ground found, return original position (may fail to spawn)
+        Debug.LogWarning($"MonsterSpawner: Could not find valid spawn position near {position}");
         return position;
     }
 
     private bool IsPositionWalkable(Vector3 worldPosition)
     {
-        //LMJ: If no GridManager, assume position is valid
-        if (gridManager == null)
-            return true;
+        //LMJ: Primary check: Is position on NavMesh?
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(worldPosition, out navHit, navMeshSampleDistance, NavMesh.AllAreas))
+        {
+            //LMJ: Position is on NavMesh - check distance to sampled point
+            float distance = Vector3.Distance(worldPosition, navHit.position);
+            if (distance <= navMeshSampleDistance)
+            {
+                return true;
+            }
+        }
 
-        //LMJ: Check if position is on a walkable node in the grid
-        GridNode node = gridManager.GetNodeFromWorldPosition(worldPosition);
+        //LMJ: Fallback: Check with GridManager if available
+        if (gridManager != null)
+        {
+            GridNode node = gridManager.GetNodeFromWorldPosition(worldPosition);
+            return node != null && node.IsWalkable;
+        }
 
-        return node != null && node.IsWalkable;
+        //LMJ: If no validation methods available, assume not walkable (safe default)
+        return false;
     }
 
     private void ActivateMonsters()

@@ -28,6 +28,9 @@ public class SkillManager : MonoBehaviour
     //LMJ: Track currently playing audio sources for each skill slot
     private Dictionary<int, AudioSource> playingAudioSources = new Dictionary<int, AudioSource>();
 
+    //LMJ: Reference to PlayerMovement for movement control
+    private PlayerMovement playerMovement;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -43,6 +46,16 @@ public class SkillManager : MonoBehaviour
     private void Start()
     {
         InitializeSkillSystem();
+
+        //LMJ: Get PlayerMovement reference
+        if (hero != null)
+        {
+            playerMovement = hero.GetComponent<PlayerMovement>();
+            if (playerMovement == null)
+            {
+                Debug.LogWarning("SkillManager: Hero does not have PlayerMovement component!");
+            }
+        }
     }
 
     private void Update()
@@ -171,21 +184,39 @@ public class SkillManager : MonoBehaviour
             return;
         }
 
-        //LMJ: Initialize skill at spawn point
-        Debug.Log($"Casting {slot.skillData.skillName} at {spawnPoint.position}");
-        skill.Initialize(spawnPoint.position, spawnPoint.rotation);
-
-        //LMJ: Play skill sound
+        //LMJ: Play skill sound immediately (before delay)
         PlaySkillSound(slotIndex, slot.skillData);
 
-        //LMJ: Start cooldown
+        //LMJ: Start cooldown immediately
         skillCooldowns[slotIndex] = slot.skillData.cooldownTime;
+
+        //LMJ: Notify PlayerMovement about casting (before delay)
+        if (playerMovement != null)
+        {
+            playerMovement.StartCastingSkill(slot.skillData.canCastWhileMoving);
+        }
+
+        //LMJ: Apply effect delay if specified
+        if (slot.skillData.effectDelay > 0f)
+        {
+            await UniTask.Delay((int)(slot.skillData.effectDelay * 1000));
+        }
+
+        //LMJ: Initialize skill at spawn point (after delay)
+        Debug.Log($"Casting {slot.skillData.skillName} at {spawnPoint.position}");
+        skill.Initialize(spawnPoint.position, spawnPoint.rotation);
 
         //LMJ: Execute skill
         if (slot.skillData.isAsync)
         {
-            //LMJ: Async: Fire and forget
+            //LMJ: Async: Fire and forget, end casting immediately
             skill.ExecuteSkill().Forget();
+
+            //LMJ: End casting state for async skills
+            if (playerMovement != null)
+            {
+                playerMovement.StopCastingSkill();
+            }
         }
         else
         {
@@ -193,6 +224,12 @@ public class SkillManager : MonoBehaviour
             isCastingSyncSkill = true;
             await skill.ExecuteSkill();
             isCastingSyncSkill = false;
+
+            //LMJ: End casting state after sync skill completes
+            if (playerMovement != null)
+            {
+                playerMovement.StopCastingSkill();
+            }
         }
     }
 
@@ -289,6 +326,32 @@ public class SkillManager : MonoBehaviour
         return skillCooldowns[slotIndex] <= 0f;
     }
 
+    //LMJ: Public method to find slot index by SkillData (for UI)
+    public int GetSlotIndex(SkillData skillData)
+    {
+        if (skillData == null)
+            return -1;
+
+        for (int i = 0; i < skillSlots.Count; i++)
+        {
+            if (skillSlots[i].skillData == skillData)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    //LMJ: Public method to get SkillData by slot index
+    public SkillData GetSkillData(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= skillSlots.Count)
+            return null;
+
+        return skillSlots[slotIndex].skillData;
+    }
+
     private void PlaySkillSound(int slotIndex, SkillData skillData)
     {
         if (skillData.skillSound == null)
@@ -298,8 +361,9 @@ public class SkillManager : MonoBehaviour
         if (skillData.stopPreviousSound && playingAudioSources.ContainsKey(slotIndex))
         {
             AudioSource prevSource = playingAudioSources[slotIndex];
-            if (prevSource != null)
+            if (prevSource != null && prevSource.isPlaying)
             {
+                prevSource.Stop();
                 Destroy(prevSource.gameObject);
             }
             playingAudioSources.Remove(slotIndex);
@@ -313,6 +377,7 @@ public class SkillManager : MonoBehaviour
         AudioSource audioSource = audioObj.AddComponent<AudioSource>();
         audioSource.clip = skillData.skillSound;
         audioSource.spatialBlend = 0f; //LMJ: 2D sound
+        audioSource.volume = 1f;
         audioSource.Play();
 
         //LMJ: Track this audio source
@@ -327,15 +392,19 @@ public class SkillManager : MonoBehaviour
         //LMJ: Wait for sound to finish
         await UniTask.Delay((int)(duration * 1000));
 
-        //LMJ: Cleanup
+        //LMJ: Cleanup only if audio object still exists
         if (audioObj != null)
         {
             Destroy(audioObj);
         }
 
+        //LMJ: Remove from tracking only if it's the same audio source
         if (playingAudioSources.ContainsKey(slotIndex))
         {
-            playingAudioSources.Remove(slotIndex);
+            if (playingAudioSources[slotIndex] == null || playingAudioSources[slotIndex].gameObject == audioObj)
+            {
+                playingAudioSources.Remove(slotIndex);
+            }
         }
     }
 }

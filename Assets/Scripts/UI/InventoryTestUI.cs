@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class InventoryTestUI : MonoBehaviour
 {
     public Inventory playerInventory;
-    public Item testItem; // Å×½ºÆ®¿¡ »ç¿ëÇÒ ScriptableObject ¾ÆÀÌÅÛ
+    public Item testItem; // ï¿½×½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ScriptableObject ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public Button addButton;
     public Button removeButton;
     public Text statusText;
@@ -12,7 +12,7 @@ public class InventoryTestUI : MonoBehaviour
     void Start()
     {
         if (playerInventory == null)
-            playerInventory = FindObjectOfType<Inventory>();
+            playerInventory = FindFirstObjectByType<Inventory>();
 
         if (addButton != null) addButton.onClick.AddListener(OnAdd);
         if (removeButton != null) removeButton.onClick.AddListener(OnRemove);
@@ -42,7 +42,7 @@ public class InventoryTestUI : MonoBehaviour
 
     void Update()
     {
-        // »óÅÂ¸¦ Áö¼Ó ¾÷µ¥ÀÌÆ®
+        // ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         UpdateStatus();
     }
 }

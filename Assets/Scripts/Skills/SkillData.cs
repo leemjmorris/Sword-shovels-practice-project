@@ -33,4 +33,9 @@ public class SkillData : ScriptableObject
     public AudioClip skillSound;
     [Tooltip("If true, stops previous instance of this sound when cast again")]
     public bool stopPreviousSound = true;
+
+    [Header("Timing")]
+    [Tooltip("Delay (in seconds) before the skill effect appears after casting. Audio plays immediately.")]
+    [Range(0f, 2f)]
+    public float effectDelay = 0f;
 }

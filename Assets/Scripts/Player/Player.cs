@@ -4,7 +4,6 @@ using UnityEngine;
 public class Player : CharacterStats
 {
     private float lastAttackTime = 0f;
-    private bool isNearEnemy = false;
     private GameObject currentEnemy = null;
 
     [SerializeField] private Transform weaponPoint; // 무기 장착 위치
@@ -65,15 +64,13 @@ public class Player : CharacterStats
     {
         if (other.CompareTag("Enemy"))
         {
-            isNearEnemy = true;        
-            currentEnemy = other.gameObject; 
+            currentEnemy = other.gameObject;
         }
     }
-    private void OnTriggerExit(Collider other) 
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
-            isNearEnemy = false;
             currentEnemy = null;
         }
     }

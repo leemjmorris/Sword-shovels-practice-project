@@ -34425,9 +34425,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Fus_Ro_Dah
   lifetime: 5
-  radius: 5
-  knockbackForce: 15
-  damage: 5
+  radius: 10
+  knockbackForce: 25
+  damage: 10
   effectDuration: 0.25
   warCryEffect: {fileID: 8974203713140315807}
-  effectScale: 0.3
+  effectScale: 0.4

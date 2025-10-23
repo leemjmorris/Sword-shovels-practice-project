@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4453258726093468, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4453258726093468, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
       propertyPath: m_LocalPosition.y
@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4453258726093468, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -57.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4453258726093468, guid: ef613d77160d9a24f891c787d244dd90, type: 3}
       propertyPath: m_LocalRotation.w
@@ -218,7 +218,12 @@ MonoBehaviour:
   autoFollowPath: 1
   drawPathGizmos: 1
   preferredPathfindingMode: 2
-  requiresDynamicObstacleAvoidance: 1
+  requiresDynamicObstacleAvoidance: 0
+  gravity: 30
+  groundCheckDistance: 0.3
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
   detectionRange: 10
   attackRange: 2
   pathUpdateInterval: 0.5
@@ -227,3 +232,4 @@ MonoBehaviour:
   animator: {fileID: 9129579971385039806}
   enemyStats: {fileID: 3762532679743880383}
   attackCooldown: 1
+  deathZoneY: -10
