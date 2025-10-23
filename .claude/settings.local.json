@@ -5,7 +5,12 @@
       "Bash(move:*)",
       "Bash(rm:*)",
       "Bash(find:*)",
-      "Read(//c/Users/LMJ/AppData/Roaming/Code/User/snippets/**)"
+      "Read(//c/Users/LMJ/AppData/Roaming/Code/User/snippets/**)",
+      "Bash(dir:*)",
+      "Bash(cat:*)",
+      "Bash(git log:*)",
+      "Bash(tree:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": []

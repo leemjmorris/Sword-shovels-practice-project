@@ -16,6 +16,10 @@ namespace PathFinding
         [SerializeField] protected bool autoFollowPath = true;
         [SerializeField] protected bool drawPathGizmos = true;
 
+        [Header("Pathfinding Mode")]
+        [SerializeField] protected PathfindingMode preferredPathfindingMode = PathfindingMode.Hybrid;
+        [SerializeField] protected bool requiresDynamicObstacleAvoidance = false;
+
         protected CharacterController characterController;
         protected List<Vector3> currentPath;
         protected int currentWaypointIndex = 0;
@@ -64,6 +68,13 @@ namespace PathFinding
             }
 
             Vector3 targetWaypoint = currentPath[currentWaypointIndex];
+
+            //LMJ: Check if we should stop at an interaction object
+            if (CheckForInteractionObject(targetWaypoint))
+            {
+                return;
+            }
+
             Vector3 direction = (targetWaypoint - transform.position).normalized;
             direction.y = 0;
 
@@ -127,6 +138,48 @@ namespace PathFinding
             isFollowingPath = false;
             currentPath = null;
             currentWaypointIndex = 0;
+        }
+
+        //LMJ: IPathfindable interface implementation - Get preferred pathfinding mode
+        public virtual PathfindingMode GetPreferredPathfindingMode()
+        {
+            return preferredPathfindingMode;
+        }
+
+        //LMJ: IPathfindable interface implementation - Requires dynamic obstacle avoidance
+        public virtual bool RequiresDynamicObstacleAvoidance()
+        {
+            return requiresDynamicObstacleAvoidance;
+        }
+
+        //LMJ: Set preferred pathfinding mode at runtime
+        public virtual void SetPreferredPathfindingMode(PathfindingMode mode)
+        {
+            preferredPathfindingMode = mode;
+        }
+
+        //LMJ: Check if there's an interaction object nearby that requires stopping
+        protected virtual bool CheckForInteractionObject(Vector3 targetPosition)
+        {
+            var interactionManager = FindFirstObjectByType<global::Managers.InteractionManager>();
+            if (interactionManager == null)
+                return false;
+
+            global::Interaction.IInteractable currentInteractable = interactionManager.GetCurrentInteractable();
+
+            if (currentInteractable != null && currentInteractable.ShouldStopOnReach())
+            {
+                float distanceToInteraction = Vector3.Distance(transform.position, currentInteractable.GetInteractionPosition());
+
+                if (distanceToInteraction < stoppingDistance * 2f) // Stop a bit earlier for interaction
+                {
+                    StopMoving();
+                    Debug.Log($"{gameObject.name}: Stopped at interaction object");
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         protected virtual void OnDrawGizmos()

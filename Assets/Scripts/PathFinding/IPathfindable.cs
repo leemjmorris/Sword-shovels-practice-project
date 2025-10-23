@@ -11,5 +11,11 @@ namespace PathFinding
         void SetPath(List<Vector3> path);
         void FollowPath();
         bool HasReachedDestination();
+
+        //LMJ: Get preferred pathfinding mode for this entity
+        PathfindingMode GetPreferredPathfindingMode();
+
+        //LMJ: Whether this entity requires dynamic obstacle avoidance
+        bool RequiresDynamicObstacleAvoidance();
     }
 }
