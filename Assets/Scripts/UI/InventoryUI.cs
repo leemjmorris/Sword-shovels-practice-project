@@ -19,21 +19,21 @@ public class InventoryUI : MonoBehaviour
     private readonly List<ItemSlotUI> inventorySlots = new();
     private readonly Dictionary<EquipmentType, ItemSlotUI> equipmentSlots = new();
 
-    CancellationToken destroyToken;      // ? OnDestroy ÀÚµ¿ Ãë¼Ò
+    CancellationToken destroyToken;      // ? OnDestroy ï¿½Úµï¿½ ï¿½ï¿½ï¿½
 
     void Start()
     {
         destroyToken = this.GetCancellationTokenOnDestroy();
 
-        playerInventory  = FindObjectOfType<Inventory>();
+        playerInventory  = FindFirstObjectByType<Inventory>();
         equipmentManager = EquipmentManager.instance;
 
-        if (playerInventory == null) { Debug.LogError("Inventory ¾øÀ½"); return; }
-        if (itemSlotPrefab == null)   { Debug.LogError("itemSlotPrefab ¹ÌÁöÁ¤"); return; }
-        if (inventoryContent == null) { Debug.LogError("inventoryContent ¹ÌÁöÁ¤"); return; }
-        if (equipmentContent == null) { Debug.LogWarning("equipmentContent ¹ÌÁöÁ¤(Àåºñ ½½·Ô »ý·«)"); }
+        if (playerInventory == null) { Debug.LogError("Inventory ï¿½ï¿½ï¿½ï¿½"); return; }
+        if (itemSlotPrefab == null)   { Debug.LogError("itemSlotPrefab ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"); return; }
+        if (inventoryContent == null) { Debug.LogError("inventoryContent ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"); return; }
+        if (equipmentContent == null) { Debug.LogWarning("equipmentContent ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)"); }
 
-        // ÀÌº¥Æ® ±¸µ¶
+        // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         playerInventory.OnItemAdded   += HandleItemAdded;
         playerInventory.OnItemRemoved += HandleItemRemoved;
         playerInventory.OnChanged     += Refresh;
@@ -82,7 +82,7 @@ public class InventoryUI : MonoBehaviour
             var slot = go.GetComponent<ItemSlotUI>();
             if (slot == null)
             {
-                Debug.LogWarning("itemSlotPrefab¿¡ ItemSlotUI ¾øÀ½");
+                Debug.LogWarning("itemSlotPrefabï¿½ï¿½ ItemSlotUI ï¿½ï¿½ï¿½ï¿½");
                 Destroy(go);
                 return;
             }
@@ -92,7 +92,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    // -------------------- ÀÌº¥Æ® ÇÚµé·¯ --------------------
+    // -------------------- ï¿½Ìºï¿½Æ® ï¿½Úµé·¯ --------------------
     void HandleItemAdded(Item item)
     {
         int need = Mathf.Max(playerInventory.capacity, playerInventory.items.Count);
@@ -100,7 +100,7 @@ public class InventoryUI : MonoBehaviour
         Refresh();
 
         if (scrollRect && scrollToBottomOnAdd)
-            ScrollToBottomNextFrameAsync().Forget();   // ? UniTask »ç¿ë
+            ScrollToBottomNextFrameAsync().Forget();   // ? UniTask ï¿½ï¿½ï¿½
     }
 
     void HandleItemRemoved(Item item)
@@ -120,14 +120,14 @@ public class InventoryUI : MonoBehaviour
         Refresh();
     }
 
-    // -------------------- UniTask ºñµ¿±â ½ºÅ©·Ñ --------------------
+    // -------------------- UniTask ï¿½ñµ¿±ï¿½ ï¿½ï¿½Å©ï¿½ï¿½ --------------------
     async UniTask ScrollToBottomNextFrameAsync()
     {
-        // 1Â÷ ·¹ÀÌ¾Æ¿ô °­Á¦
+        // 1ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (inventoryContent is RectTransform rt)
             LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
 
-        // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â (ÆÄ±« ½Ã ÀÚµ¿Ãë¼Ò)
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ï¿½Ä±ï¿½ ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½)
         await UniTask.Yield(cancellationToken: destroyToken);
 
         Canvas.ForceUpdateCanvases();
@@ -142,11 +142,11 @@ public class InventoryUI : MonoBehaviour
         if (scrollRect.verticalScrollbar != null)
             isTopToBottom = (scrollRect.verticalScrollbar.direction == Scrollbar.Direction.TopToBottom);
 
-        // TopToBottom: 0 = ¹Ù´Ú / BottomToTop: 1 = ¹Ù´Ú
+        // TopToBottom: 0 = ï¿½Ù´ï¿½ / BottomToTop: 1 = ï¿½Ù´ï¿½
         scrollRect.verticalNormalizedPosition = isTopToBottom ? 0f : 1f;
     }
 
-    // -------------------- È­¸é °»½Å --------------------
+    // -------------------- È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ --------------------
     public void Refresh()
     {
         for (int i = 0; i < inventorySlots.Count; i++)
@@ -172,11 +172,11 @@ public class InventoryUI : MonoBehaviour
     {
         if (playerInventory == null) return;
 
-        // ÀÌº¥Æ® Àá½Ã ÇØÁ¦(ÀçÁøÀÔ ¹æÁö)
+        // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         playerInventory.OnItemAdded -= HandleItemAdded;
         playerInventory.OnItemRemoved -= HandleItemRemoved;
         playerInventory.OnChanged      -= Refresh;    
-        // µÚ¿¡¼­ ¾ÕÀ¸·Î ¾ÈÀüÇÏ°Ô ¼øÈ¸
+        // ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½È¸
         for (int i = inventorySlots.Count - 1; i >= 0; i--)
         {
             var slot = inventorySlots[i];
@@ -185,7 +185,7 @@ public class InventoryUI : MonoBehaviour
             var marker = slot.GetComponent<CreatedSlotMarker>();
             if (marker != null)
             {
-                // ½½·Ô ÀÎµ¦½º¿¡ ´ëÀÀÇÏ´Â ¾ÆÀÌÅÛÀÌ ÀÖÀ¸¸é Á¦°Å (ÀÌº¥Æ®·Î UIµµ Á¤¸®µÊ)
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ìºï¿½Æ®ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
                 if (i < playerInventory.items.Count)
                 {
                     var itemToRemove = playerInventory.items[i];
@@ -198,7 +198,7 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        // ÀÌº¥Æ® Àç±¸µ¶
+        // ï¿½Ìºï¿½Æ® ï¿½ç±¸ï¿½ï¿½
         playerInventory.OnItemAdded += HandleItemAdded;
         playerInventory.OnItemRemoved += HandleItemRemoved;
         playerInventory.OnChanged     += Refresh; 
@@ -207,5 +207,5 @@ public class InventoryUI : MonoBehaviour
     }
 }
 
-// ½½·ÔÀÌ ·±Å¸ÀÓ »ý¼ºµÆÀ½À» Ç¥½ÃÇÏ´Â ¸¶Ä¿
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¿
 

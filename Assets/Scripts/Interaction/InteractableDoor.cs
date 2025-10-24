@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using System.Collections;
 
 namespace Interaction
@@ -24,12 +25,19 @@ namespace Interaction
         [Header("Initial State")]
         [SerializeField] private bool startClosed = true;
 
+        [Header("NavMesh Obstacle Settings")]
+        [SerializeField] private bool autoManageNavMeshObstacles = true;
+        [Tooltip("Manually assigned obstacle objects (optional). If provided, these will be used instead of auto-creating obstacles on door parts.")]
+        [SerializeField] private GameObject[] manualObstacles;
+
         private bool isOpened = false;
         private bool isOpening = false;
 
         private Vector3 leftDoorStartPos;
         private Vector3 rightDoorStartPos;
         private Vector3 topDoorStartPos;
+
+        private NavMeshObstacle[] doorObstacles;
 
         private void Awake()
         {
@@ -47,6 +55,12 @@ namespace Interaction
             if (collider != null)
             {
                 collider.isTrigger = true;
+            }
+
+            //LMJ: Setup NavMeshObstacles if auto-management is enabled
+            if (autoManageNavMeshObstacles)
+            {
+                SetupNavMeshObstacles();
             }
         }
 
@@ -154,6 +168,110 @@ namespace Interaction
 
             isOpening = false;
             isOpened = true;
+
+            //LMJ: Disable NavMeshObstacles when door is fully open
+            if (autoManageNavMeshObstacles)
+            {
+                SetNavMeshObstaclesEnabled(false);
+            }
+        }
+
+        //LMJ: Setup NavMeshObstacles on each door part or use manual obstacles
+        private void SetupNavMeshObstacles()
+        {
+            System.Collections.Generic.List<NavMeshObstacle> obstacles = new System.Collections.Generic.List<NavMeshObstacle>();
+
+            //LMJ: If manual obstacles are provided, use them
+            if (manualObstacles != null && manualObstacles.Length > 0)
+            {
+                foreach (GameObject obstacleObj in manualObstacles)
+                {
+                    if (obstacleObj != null)
+                    {
+                        NavMeshObstacle obstacle = obstacleObj.GetComponent<NavMeshObstacle>();
+                        if (obstacle != null)
+                        {
+                            //LMJ: Configure the obstacle
+                            obstacle.carving = true;
+                            obstacle.carveOnlyStationary = false;
+                            obstacles.Add(obstacle);
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"Manual obstacle '{obstacleObj.name}' does not have a NavMeshObstacle component!");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //LMJ: Auto-create obstacles on door parts (legacy behavior)
+                if (leftDoor != null)
+                {
+                    NavMeshObstacle obstacle = SetupObstacleOnDoor(leftDoor);
+                    if (obstacle != null) obstacles.Add(obstacle);
+                }
+
+                if (rightDoor != null)
+                {
+                    NavMeshObstacle obstacle = SetupObstacleOnDoor(rightDoor);
+                    if (obstacle != null) obstacles.Add(obstacle);
+                }
+
+                if (topDoor != null)
+                {
+                    NavMeshObstacle obstacle = SetupObstacleOnDoor(topDoor);
+                    if (obstacle != null) obstacles.Add(obstacle);
+                }
+            }
+
+            doorObstacles = obstacles.ToArray();
+        }
+
+        //LMJ: Setup NavMeshObstacle on a single door GameObject (auto-create mode)
+        private NavMeshObstacle SetupObstacleOnDoor(GameObject doorObject)
+        {
+            NavMeshObstacle obstacle = doorObject.GetComponent<NavMeshObstacle>();
+
+            if (obstacle == null)
+            {
+                obstacle = doorObject.AddComponent<NavMeshObstacle>();
+            }
+
+            //LMJ: Configure the obstacle
+            obstacle.carving = true; // Enable carving to cut holes in NavMesh
+            obstacle.carveOnlyStationary = false; // Allow carving while moving (during door open animation)
+            obstacle.shape = NavMeshObstacleShape.Box;
+
+            //LMJ: Try to match the collider size
+            Collider doorCollider = doorObject.GetComponent<Collider>();
+            if (doorCollider != null)
+            {
+                obstacle.center = doorCollider.bounds.center - doorObject.transform.position;
+                obstacle.size = doorCollider.bounds.size;
+            }
+            else
+            {
+                //LMJ: Default size if no collider found
+                obstacle.center = Vector3.zero;
+                obstacle.size = new Vector3(1f, 2f, 0.2f);
+            }
+
+            return obstacle;
+        }
+
+        //LMJ: Enable or disable all door obstacles
+        private void SetNavMeshObstaclesEnabled(bool enabled)
+        {
+            if (doorObstacles == null) return;
+
+            foreach (NavMeshObstacle obstacle in doorObstacles)
+            {
+                if (obstacle != null)
+                {
+                    obstacle.enabled = enabled;
+                }
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -179,6 +297,72 @@ namespace Interaction
             {
                 Gizmos.color = isOpened ? Color.green : Color.yellow;
                 Gizmos.DrawWireCube(transform.position, collider.bounds.size);
+            }
+
+            //LMJ: Draw NavMeshObstacle preview (only in editor)
+            if (autoManageNavMeshObstacles && !Application.isPlaying)
+            {
+                DrawObstaclePreview();
+            }
+        }
+
+        //LMJ: Draw obstacle size preview for manual or auto obstacles
+        private void DrawObstaclePreview()
+        {
+            Gizmos.color = new Color(1f, 0.5f, 0f, 0.5f); // Orange
+
+            //LMJ: If manual obstacles are provided, draw them
+            if (manualObstacles != null && manualObstacles.Length > 0)
+            {
+                foreach (GameObject obstacleObj in manualObstacles)
+                {
+                    if (obstacleObj != null)
+                    {
+                        NavMeshObstacle obstacle = obstacleObj.GetComponent<NavMeshObstacle>();
+                        if (obstacle != null)
+                        {
+                            Vector3 center = obstacleObj.transform.position + obstacleObj.transform.TransformVector(obstacle.center);
+                            Vector3 size = Vector3.Scale(obstacle.size, obstacleObj.transform.lossyScale);
+                            Gizmos.DrawWireCube(center, size);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //LMJ: Draw auto-created obstacles preview
+                if (leftDoor != null)
+                {
+                    DrawSingleObstaclePreview(leftDoor);
+                }
+
+                if (rightDoor != null)
+                {
+                    DrawSingleObstaclePreview(rightDoor);
+                }
+
+                if (topDoor != null)
+                {
+                    DrawSingleObstaclePreview(topDoor);
+                }
+            }
+        }
+
+        //LMJ: Draw single obstacle preview for auto-created obstacles
+        private void DrawSingleObstaclePreview(GameObject doorObject)
+        {
+            Collider doorCollider = doorObject.GetComponent<Collider>();
+            if (doorCollider != null)
+            {
+                Vector3 obstacleSize = doorCollider.bounds.size;
+                Vector3 obstacleCenter = doorCollider.bounds.center;
+                Gizmos.DrawWireCube(obstacleCenter, obstacleSize);
+            }
+            else
+            {
+                Vector3 obstacleSize = new Vector3(1f, 2f, 0.2f);
+                Vector3 obstacleCenter = doorObject.transform.position;
+                Gizmos.DrawWireCube(obstacleCenter, obstacleSize);
             }
         }
     }

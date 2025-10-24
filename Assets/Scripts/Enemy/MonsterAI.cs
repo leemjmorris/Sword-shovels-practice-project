@@ -22,6 +22,9 @@ public class MonsterAI : PathfindableEntity
     [SerializeField] private Enemy enemyStats;
     [SerializeField] private float attackCooldown = 1f;
 
+    [Header("Death Zone")]
+    [SerializeField] private float deathZoneY = -10f;
+
     private Vector3 initialPosition;
     private float lastPathUpdateTime = 0f;
     private float lastAttackTime = 0f;
@@ -57,6 +60,13 @@ public class MonsterAI : PathfindableEntity
     protected override void Update()
     {
         base.Update();
+
+        //LMJ: Check if monster fell below death zone
+        if (transform.position.y < deathZoneY)
+        {
+            HandleFallDeath();
+            return;
+        }
 
         if (player == null)
             return;
@@ -190,6 +200,23 @@ public class MonsterAI : PathfindableEntity
         if (!isInAttackRange && animator.GetBool("IsAttack"))
         {
             // animator.SetTrigger("ResetAttack");
+        }
+    }
+
+    private void HandleFallDeath()
+    {
+        //LMJ: Monster fell off the map - trigger death
+        Debug.LogWarning($"{gameObject.name} fell below death zone (Y: {transform.position.y}). Destroying...");
+
+        //LMJ: Trigger death through Enemy stats system if available
+        if (enemyStats != null)
+        {
+            enemyStats.TakeDamage(9999f, gameObject);
+        }
+        else
+        {
+            //LMJ: Direct destroy if no stats component
+            Destroy(gameObject);
         }
     }
 

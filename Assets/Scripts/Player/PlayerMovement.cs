@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
     [SerializeField] private bool requiresDynamicObstacleAvoidance = false;
     private List<Vector3> currentPath;
 
+    //LMJ: Skill casting state
+    private bool isCastingSkill = false;
+    private bool canMoveWhileCasting = false;
+
     //LMJ: IPathfindable interface implementation
     public Vector3 Position => transform.position;
     public float MoveSpeed => moveSpeed;
@@ -34,6 +38,12 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
     private void Start()
     {
         navMeshAgent.speed = moveSpeed;
+
+        //LMJ: Configure NavMeshAgent to respect NavMeshObstacles
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+        }
     }
 
     private void Update()
@@ -48,6 +58,13 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
         //LMJ: Handle mouse input for movement using PathFindManager
         if (Input.GetMouseButtonDown(0))
         {
+            //LMJ: Check if casting a skill that prevents movement
+            if (isCastingSkill && !canMoveWhileCasting)
+            {
+                //LMJ: Cannot move while casting this skill
+                return;
+            }
+
             RaycastHit hit;
 
             //JML : Ignore clicks on enemies
@@ -70,9 +87,12 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
         FollowPath();
 
         //LMJ: Update animator
-        Vector3 horizontalVelocity = new Vector3(navMeshAgent.velocity.x, 0, navMeshAgent.velocity.z);
-        float currentSpeed = horizontalVelocity.magnitude;
-        playerAnimator.SetFloat("Speed", currentSpeed);
+        if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+        {
+            Vector3 horizontalVelocity = new Vector3(navMeshAgent.velocity.x, 0, navMeshAgent.velocity.z);
+            float currentSpeed = horizontalVelocity.magnitude;
+            playerAnimator.SetFloat("Speed", currentSpeed);
+        }
     }
 
     public void MoveTo(Vector3 targetPosition)
@@ -89,7 +109,10 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
         if (currentPath != null && currentPath.Count > 0)
         {
             //LMJ: Set NavMeshAgent destination to the final point
-            navMeshAgent.SetDestination(currentPath[currentPath.Count - 1]);
+            if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+            {
+                navMeshAgent.SetDestination(currentPath[currentPath.Count - 1]);
+            }
         }
     }
 
@@ -110,6 +133,7 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
         if (currentPath == null || currentPath.Count == 0)
             return true;
 
+        //LMJ: Check if NavMeshAgent is valid
         if (navMeshAgent == null || !navMeshAgent.enabled || !navMeshAgent.isOnNavMesh)
             return true;
 
@@ -160,10 +184,36 @@ public class PlayerMovement : MonoBehaviour, IPathfindable
     //LMJ: Resume path after jump or interaction
     public void ResumePath()
     {
-        if (currentPath != null && currentPath.Count > 0 && navMeshAgent.enabled)
+        if (currentPath != null && currentPath.Count > 0 && navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
         {
             //LMJ: Re-set destination to resume movement
             navMeshAgent.SetDestination(currentPath[currentPath.Count - 1]);
         }
+    }
+
+    //LMJ: Called by SkillManager when skill casting starts
+    public void StartCastingSkill(bool canMoveWhileCasting)
+    {
+        isCastingSkill = true;
+        this.canMoveWhileCasting = canMoveWhileCasting;
+
+        //LMJ: If cannot move while casting, stop current movement
+        if (!canMoveWhileCasting)
+        {
+            StopMoving();
+        }
+    }
+
+    //LMJ: Called by SkillManager when skill casting ends
+    public void StopCastingSkill()
+    {
+        isCastingSkill = false;
+        canMoveWhileCasting = false;
+    }
+
+    //LMJ: Check if currently casting a skill
+    public bool IsCastingSkill()
+    {
+        return isCastingSkill;
     }
 }

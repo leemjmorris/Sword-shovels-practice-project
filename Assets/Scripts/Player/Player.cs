@@ -80,9 +80,9 @@ public class Player : CharacterStats
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Enemy"))
-        {    
-            currentEnemy = other.gameObject; 
-        }
+        {
+            currentEnemy = other.gameObject;
+        }    
     }
     private void OnTriggerExit(Collider other)
     {
