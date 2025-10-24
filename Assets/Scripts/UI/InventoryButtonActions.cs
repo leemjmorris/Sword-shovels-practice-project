@@ -41,15 +41,16 @@ public class InventoryButtonActions : MonoBehaviour
         Debug.Log($"AddMultiple: {added} items added");
     }
 
-    public void ClearAll()
+public void ClearAll()
+{
+    if (playerInventory == null) return;
+    for (int i = playerInventory.items.Count - 1; i >= 0; i--)
     {
-        if (playerInventory == null) return;
-        for (int i = playerInventory.items.Count - 1; i >= 0; i--)
-        {
-            playerInventory.items.RemoveAt(i);
-        }
-        Debug.Log("Inventory cleared");
+        var it = playerInventory.items[i];
+        playerInventory.RemoveItem(it);     // ? 이벤트 통해 UI 동기화
     }
+    Debug.Log("Inventory cleared");
+}
 
     // 버튼에서 런타임으로 생성된 슬롯만 정리하려면 이 메서드를 사용하세요.
     public void ClearCreatedSlots(InventoryUI ui)
@@ -61,4 +62,5 @@ public class InventoryButtonActions : MonoBehaviour
         }
         ui.ClearCreatedSlots();
     }
+    
 }
