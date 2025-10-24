@@ -14,7 +14,7 @@ public class InventoryUI : MonoBehaviour
     public ScrollRect scrollRect;
     public bool scrollToBottomOnAdd = true;
 
-    private Inventory playerInventory;
+    public Inventory playerInventory;
     private EquipmentManager equipmentManager;
     private readonly List<ItemSlotUI> inventorySlots = new();
     private readonly Dictionary<EquipmentType, ItemSlotUI> equipmentSlots = new();
@@ -62,14 +62,23 @@ public class InventoryUI : MonoBehaviour
     {
         inventorySlots.Clear();
         if (inventoryContent != null)
-            foreach (Transform child in inventoryContent) child.gameObject.SetActive(false);
+        {
+            foreach (Transform child in inventoryContent)
+            {
+                
+            }
+        }
     }
 
     void InitializeEquipmentSlots()
     {
         equipmentSlots.Clear();
-        if (equipmentContent != null)
-            foreach (Transform child in equipmentContent) child.gameObject.SetActive(false);
+        if (equipmentContent == null) return;
+        
+             foreach (Transform child in equipmentContent)
+                {
+                    child.gameObject.SetActive(true); 
+                }
     }
 
     void EnsureInventorySlotCount(int needCount)
@@ -95,7 +104,8 @@ public class InventoryUI : MonoBehaviour
     // -------------------- 이벤트 핸들러 --------------------
     void HandleItemAdded(Item item)
     {
-        int need = Mathf.Max(playerInventory.capacity, playerInventory.items.Count);
+        //int need = Mathf.Max(playerInventory.capacity, playerInventory.items.Count);
+        int need = playerInventory.items.Count;  
         EnsureInventorySlotCount(need);
         Refresh();
 
@@ -123,7 +133,7 @@ public class InventoryUI : MonoBehaviour
     // -------------------- UniTask 비동기 스크롤 --------------------
     async UniTask ScrollToBottomNextFrameAsync()
     {
-        // 1차 레이아웃 강제
+        
         if (inventoryContent is RectTransform rt)
             LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
 
@@ -207,5 +217,5 @@ public class InventoryUI : MonoBehaviour
     }
 }
 
-// 슬롯이 런타임 생성됐음을 표시하는 마커
+
 

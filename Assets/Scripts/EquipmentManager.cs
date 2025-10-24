@@ -13,6 +13,7 @@ public class EquipmentManager : MonoBehaviour
             return;
         }
         instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     // 장비 슬롯: 장착된 아이템
