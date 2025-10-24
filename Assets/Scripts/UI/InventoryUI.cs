@@ -77,7 +77,20 @@ public class InventoryUI : MonoBehaviour
         
              foreach (Transform child in equipmentContent)
                 {
-                    child.gameObject.SetActive(true); 
+            child.gameObject.SetActive(true); 
+                    
+                    var slot = child.GetComponent<ItemSlotUI>();
+                    if (slot == null) continue;
+
+                    var tag = child.GetComponent<EquipmentSlotTag>();
+                    // 태그가 없으면 타입을 모름 → UI 갱신 대상에서 제외
+                    if (tag == null) continue;
+
+                    // 이 슬롯은 "장비 슬롯"이다 라고 알려주고 타입도 넘겨줌
+                    slot.Initialize(playerInventory, equipmentManager, true, tag.type);
+
+                    // Refresh()에서 채울 수 있도록 매핑 등록
+                    equipmentSlots[tag.type] = slot;        
                 }
     }
 
